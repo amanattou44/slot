@@ -4,6 +4,7 @@ stopCount = 0
 
 # 初期メソッド
 startSlot = ->
+  # TODO:スタートを一回しか押せないようにトグル処理を入れる
   for key in timers
     console.log key
     return unless key?
