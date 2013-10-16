@@ -1,2 +1,5 @@
 slot
 ====
+```
+open index.html
+```
