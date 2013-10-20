@@ -1,60 +1,58 @@
 timers = []
 nums = []
-stopCount = 0
 
 # 初期メソッド
 startSlot = ->
-  # TODO:スタートを一回しか押せないようにトグル処理を入れる
-  for key in timers
-    console.log key
-    return unless key?
+  document.getElementById("start-btn").removeEventListener "click", startSlot
 
   runSlot 0
   runSlot 1
   runSlot 2
 
+  # クリックイベント
+  document.getElementById("stop-btn0").addEventListener "click", (->
+    stopSlot 0
+    this.removeEventListener "click", arguments.callee
+  )
+  document.getElementById("stop-btn1").addEventListener "click", (->
+    stopSlot 1
+    this.removeEventListener "click", arguments.callee
+  )
+  document.getElementById("stop-btn2").addEventListener "click", (->
+    stopSlot 2
+    this.removeEventListener "click", arguments.callee
+  )
+
 # ストップメソッド
 stopSlot = (n) ->
   clearTimeout timers[n]
-  unless nums[n]
-    nums[n] = document.getElementById('num' + n).innerHTML
-    stopCount++
+  nums.push +document.getElementById('num' + n).innerHTML
 
-  checkSlot() if stopCount == 3
+  checkSlot() if nums.length == 3
 
 # チェックメソッド
 checkSlot = ->
-  return unless nums
-  return unless nums.length == 3
+  nums.sort()
 
-  nums.sort
-
-  if nums[0] == nums[1] && nums[0] == nums[2]
+  if nums[0] == nums[1] && nums[0] == nums[2] && nums[1] == nums[2]
     alert "全部揃った！"
   else if nums[0] == nums[1] || nums[1] == nums[2]
     alert "2つ揃った！"
   else
     alert "残念"
 
+  nums = []
+  console.time "test"
+  document.getElementById("start-btn").addEventListener "click", startSlot
+
 # 実行メソッド
 runSlot = (n) ->
   document.getElementById('num' + n).innerHTML = Math.floor(Math.random() * 10)
-  timers[n] = setTimeout ->
+  clearTimeout(timers[n]) if(timers[n])
+  console.time "test"
+  timers[n] = setInterval ->
     runSlot n
   , 50
 
 # スタート
 startSlot()
-
-# クリックイベント
-document.getElementById("stop-btn0").onclick = ->
-  stopSlot 0
-
-document.getElementById("stop-btn1").onclick = ->
-  stopSlot 1
- 
-document.getElementById("stop-btn2").onclick = ->
-  stopSlot 2
-
-document.getElementById("start-btn").onclick = ->
-  startSlot()
