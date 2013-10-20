@@ -42,14 +42,12 @@ checkSlot = ->
     alert "残念"
 
   nums = []
-  console.time "test"
   document.getElementById("start-btn").addEventListener "click", startSlot
 
 # 実行メソッド
 runSlot = (n) ->
   document.getElementById('num' + n).innerHTML = Math.floor(Math.random() * 10)
   clearTimeout(timers[n]) if(timers[n])
-  console.time "test"
   timers[n] = setInterval ->
     runSlot n
   , 50

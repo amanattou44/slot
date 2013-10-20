@@ -43,7 +43,6 @@
       alert("残念");
     }
     nums = [];
-    console.time("test");
     return document.getElementById("start-btn").addEventListener("click", startSlot);
   };
 
@@ -52,7 +51,6 @@
     if (timers[n]) {
       clearTimeout(timers[n]);
     }
-    console.time("test");
     return timers[n] = setInterval(function() {
       return runSlot(n);
     }, 50);
