@@ -1,5 +1,4 @@
 slot
 ====
-```
-open index.html
-```
+
+chromeの最新バージョンでindex.htmlを開いてください

@@ -10,22 +10,27 @@ startSlot = ->
   runSlot 2
 
   # クリックイベント
-  document.getElementById("stop-btn0").addEventListener "click", (->
-    stopSlot 0
-    this.removeEventListener "click", arguments.callee
-  )
-  document.getElementById("stop-btn1").addEventListener "click", (->
-    stopSlot 1
+  document.getElementById("stop-btn1").addEventListener "click", ((e) ->
+    self = this
+    stopSlot self
     this.removeEventListener "click", arguments.callee
   )
   document.getElementById("stop-btn2").addEventListener "click", (->
-    stopSlot 2
+    self = this
+    stopSlot self
+    this.removeEventListener "click", arguments.callee
+  )
+  document.getElementById("stop-btn3").addEventListener "click", (->
+    self = this
+    stopSlot self
     this.removeEventListener "click", arguments.callee
   )
 
 # ストップメソッド
-stopSlot = (n) ->
-  clearTimeout timers[n]
+stopSlot = (self) ->
+  str = self.getAttribute "id"
+  n = str.replace "stop-btn", ""
+  clearTimeout timers[n - 1]
   nums.push +document.getElementById('num' + n).innerHTML
 
   checkSlot() if nums.length == 3
@@ -34,7 +39,7 @@ stopSlot = (n) ->
 checkSlot = ->
   nums.sort()
 
-  if nums[0] == nums[1] && nums[0] == nums[2] && nums[1] == nums[2]
+  if nums[0] == nums[1] == nums[2]
     alert "全部揃った！"
   else if nums[0] == nums[1] || nums[1] == nums[2]
     alert "2つ揃った！"
@@ -46,7 +51,7 @@ checkSlot = ->
 
 # 実行メソッド
 runSlot = (n) ->
-  document.getElementById('num' + n).innerHTML = Math.floor(Math.random() * 10)
+  document.getElementById('num' + (n + 1)).innerHTML = Math.floor(Math.random() * 10)
   clearTimeout(timers[n]) if(timers[n])
   timers[n] = setInterval ->
     runSlot n

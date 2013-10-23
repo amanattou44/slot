@@ -11,22 +11,31 @@
     runSlot(0);
     runSlot(1);
     runSlot(2);
-    document.getElementById("stop-btn0").addEventListener("click", (function() {
-      stopSlot(0);
+    document.getElementById("stop-btn1").addEventListener("click", (function(e) {
+      var self;
+      self = this;
+      stopSlot(self);
       return this.removeEventListener("click", arguments.callee);
     }));
-    document.getElementById("stop-btn1").addEventListener("click", (function() {
-      stopSlot(1);
+    document.getElementById("stop-btn2").addEventListener("click", (function() {
+      var self;
+      self = this;
+      stopSlot(self);
       return this.removeEventListener("click", arguments.callee);
     }));
-    return document.getElementById("stop-btn2").addEventListener("click", (function() {
-      stopSlot(2);
+    return document.getElementById("stop-btn3").addEventListener("click", (function() {
+      var self;
+      self = this;
+      stopSlot(self);
       return this.removeEventListener("click", arguments.callee);
     }));
   };
 
-  stopSlot = function(n) {
-    clearTimeout(timers[n]);
+  stopSlot = function(self) {
+    var n, str;
+    str = self.getAttribute("id");
+    n = str.replace("stop-btn", "");
+    clearTimeout(timers[n - 1]);
     nums.push(+document.getElementById('num' + n).innerHTML);
     if (nums.length === 3) {
       return checkSlot();
@@ -34,8 +43,9 @@
   };
 
   checkSlot = function() {
+    var _ref;
     nums.sort();
-    if (nums[0] === nums[1] && nums[0] === nums[2] && nums[1] === nums[2]) {
+    if ((nums[0] === (_ref = nums[1]) && _ref === nums[2])) {
       alert("全部揃った！");
     } else if (nums[0] === nums[1] || nums[1] === nums[2]) {
       alert("2つ揃った！");
@@ -47,7 +57,7 @@
   };
 
   runSlot = function(n) {
-    document.getElementById('num' + n).innerHTML = Math.floor(Math.random() * 10);
+    document.getElementById('num' + (n + 1)).innerHTML = Math.floor(Math.random() * 10);
     if (timers[n]) {
       clearTimeout(timers[n]);
     }
