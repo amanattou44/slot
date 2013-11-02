@@ -2,4 +2,4 @@ slot
 ====
 
 #### Take a cup of coffee
-chromeの最新バージョンでindex.htmlを開いてください
+chromeの最新バージョンでかつ、インターネットに接続している状態でindex.htmlを開いてください
